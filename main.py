@@ -30,10 +30,9 @@ def index():
 
 @app.route("/delete/<int:id>")
 def delete(id):
-    for t in tasks:
-        if(t["id"] == id):
-            tasks.remove(t)
-            break;
+    task_to_delete = Task.query.get_or_404(id)
+    db.session.delete(task_to_delete)
+    db.session.commit()
     return redirect("/")
 
 @app.route("/update/<int:id>", methods=["GET","POST"])
