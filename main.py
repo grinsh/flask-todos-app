@@ -1,5 +1,4 @@
 from flask import Flask, render_template, url_for, request, redirect
-from db import tasks
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 
@@ -38,21 +37,19 @@ def delete(id):
 @app.route("/update/<int:id>", methods=["GET","POST"])
 def update(id):
     if(request.method=="GET"):
-        for t in tasks:
-            if(t["id"]==id):
-                update_task = t
-                break
+        update_task = Task.query.get_or_404(id)
         return render_template("update.html", task=update_task)
     else:
         title = request.form["title"]
         date_created = datetime.now()
-        completed = request.form["completed"]
+        completed = request.form["completed"] == "True"
 
-        for t in tasks:
-            if t["id"]==id:
-                t["title"] = title
-                t["date_created"] = date_created
-                t["completed"] = completed
+        task_to_update = Task.query.get_or_404(id)
+        task_to_update.title = title
+        task_to_update.date_created = date_created
+        task_to_update.completed = completed
+
+        db.session.commit()
         return redirect("/")
 
 @app.get("/hello")
