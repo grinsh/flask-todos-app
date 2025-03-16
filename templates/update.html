@@ -1,0 +1,25 @@
+{%  extends 'base.html'  %}
+
+
+{%  block head %}
+    <link rel="stylesheet"   href="static/css/index.css">
+    <title>Update Task</title>
+{% endblock %}
+
+
+
+{%  block body %}
+    <h1>Update Task</h1>
+    <form action="/update/{{task.id}}"  method="POST">
+        <input id="title" name="title" type="text" value="{{task.title}}"/>
+        <input id="dateToComplete" name="dateToComplete" type="text" value="{{task.dateToComplete}}"/>
+        <label>Is Completed?</label>
+        <input id="completed" name="completed" type="text" value="{{task.completed}}"/>
+
+<!--        <select  id="completed" name="completed" value="{{task.completed}}">-->
+<!--            <option  value="True">True</option>-->
+<!--            <option  value="False">False</option>-->
+<!--        </select>-->
+        <button>Update</button>
+    </form>
+{% endblock %}

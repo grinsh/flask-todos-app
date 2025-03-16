@@ -1,0 +1,9 @@
+1 - Filters in Template
+2 - Install SQLite
+3 - Use SQLite as DB
+4 - Try Except
+5 - Use datetime module
+6 - Create requirements.txt file
+7 - Create a git repository
+8 - Deploy to the cloud
+
