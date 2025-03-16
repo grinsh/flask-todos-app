@@ -22,17 +22,25 @@ def index():
         return render_template("index.html", tasks=tasks_from_db)
     else:
         title = request.form['title']
-        new_task = Task(title=title)
-        db.session.add(new_task)
-        db.session.commit()
-        return redirect("/")
+        try:
+            # assert title,  "Title must not be empty"
+            new_task = Task(title=title)
+            db.session.add(new_task)
+            db.session.commit()
+            return redirect("/")
+        except:
+            return render_template("errorMessage.html", message="Error with adding task...")
 
 @app.route("/delete/<int:id>")
 def delete(id):
-    task_to_delete = Task.query.get_or_404(id)
-    db.session.delete(task_to_delete)
-    db.session.commit()
-    return redirect("/")
+    try:
+        task_to_delete = Task.query.get_or_404(id)
+        db.session.delete(task_to_delete)
+        db.session.commit()
+        return redirect("/")
+    except:
+        return render_template("errorMessage.html", message= "An Error while deleting task...")
+
 
 @app.route("/update/<int:id>", methods=["GET","POST"])
 def update(id):

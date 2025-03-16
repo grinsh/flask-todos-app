@@ -1,7 +1,7 @@
 1 - Filters in Template     V
 2 - Install SQLite          V
-3 - Use SQLite as DB        VX
-4 - Try Except
+3 - Use SQLite as DB        V
+4 - Try Except |  assert |  unit-tests
 5 - Use datetime module     V
 6 - Create requirements.txt file    V
 7 - Create a git repository         V
