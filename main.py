@@ -19,19 +19,13 @@ with app.app_context():
 @app.route("/", methods=["GET","POST"])
 def index():
     if request.method == "GET":
-        return render_template("index.html", tasks=tasks)
+        tasks_from_db =  Task.query.filter_by().all()
+        return render_template("index.html", tasks=tasks_from_db)
     else:
         title = request.form['title']
-        date_created = datetime.now()
-        if tasks:
-            new_id = tasks[-1]["id"] + 1
-        else:
-            new_id = 1
-        new_task = {"id": new_id,
-                    "title": title,
-                    "date_created": date_created,
-                    "completed": False}
-        tasks.append(new_task)
+        new_task = Task(title=title)
+        db.session.add(new_task)
+        db.session.commit()
         return redirect("/")
 
 @app.route("/delete/<int:id>")
