@@ -25,7 +25,11 @@ with app.app_context():
 
 @app.route("/", methods=["GET","POST"])
 def index():
+<<<<<<< HEAD
     # if 'username' in session:
+=======
+    if 'username' in session:
+>>>>>>> 73d4f3b1d961ec0ccef88241b1c9ddd1cf1f1645
         if request.method == "GET":
             tasks_from_db =  Task.query.filter_by().all()
             return render_template("index.html", tasks=tasks_from_db)
@@ -39,6 +43,7 @@ def index():
                 return redirect("/")
             except:
                 return render_template("errorMessage.html", message="Error with adding task...")
+<<<<<<< HEAD
     # return redirect('/login')
 
 # @app.route('/login', methods=['GET', 'POST'])
@@ -56,6 +61,25 @@ def index():
 # def logout():
 #     session.pop('username', None)
 #     return redirect(url_for('login'))
+=======
+    return redirect(url_for('login'))
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if username == USERNAME and password == PASSWORD:
+            session['username'] = username
+            return redirect('/')
+        else:
+            return 'Invalid credentials. Please try again.'
+    return render_template('login.html')
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('login'))
+>>>>>>> 73d4f3b1d961ec0ccef88241b1c9ddd1cf1f1645
 
 
 @app.route("/delete/<int:id>")
@@ -104,4 +128,8 @@ def get_not_found():
 #     return "Not Found 404"
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     app.run(debug=True, use_evalex=False)
+=======
+    app.run(debug=True, use_evalex=False)
+>>>>>>> 73d4f3b1d961ec0ccef88241b1c9ddd1cf1f1645
