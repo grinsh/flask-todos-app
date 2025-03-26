@@ -4,10 +4,15 @@ body {
     background-color: #f4f4f4;
     margin: 0;
     padding: 20px;
+    direction: rtl;
 }
 
 h1 {
     color: #333;
+    text-align: center;
+}
+
+p {
     text-align: center;
 }
 
@@ -25,7 +30,7 @@ table {
 table thead tr {
     background-color: #009879;
     color: #ffffff;
-    text-align: left;
+    text-align: right;
     font-weight: bold;
 }
 
@@ -35,6 +40,11 @@ table th, table td {
 
 table tbody tr {
     border-bottom: 1px solid #dddddd;
+    transition: background-color 0.3s ease;
+}
+
+table tbody tr:hover {
+    background-color: #f1f1f1;
 }
 
 table tbody tr:nth-of-type(even) {
@@ -70,6 +80,25 @@ form button {
     color: #fff;
     cursor: pointer;
     border: none;
+    position: relative;
+    overflow: hidden;
+}
+
+form button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: all .5s ease-in-out;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+form button:hover::before {
+    width: 0;
+    height: 0;
 }
 
 form button:hover {
