@@ -1,11 +1,19 @@
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask, render_template, url_for, request, redirect, session
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
+
+app.secret_key = 'your_secret_key'
+
+# User credentials
+USERNAME = 'מנדי'
+PASSWORD = 'אוצר השמד'
+
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///todos.db"
 db = SQLAlchemy(app)
-# db class
+
+
 class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
@@ -17,19 +25,38 @@ with app.app_context():
 
 @app.route("/", methods=["GET","POST"])
 def index():
-    if request.method == "GET":
-        tasks_from_db =  Task.query.filter_by().all()
-        return render_template("index.html", tasks=tasks_from_db)
-    else:
-        title = request.form['title']
-        try:
-            # assert title,  "Title must not be empty"
-            new_task = Task(title=title)
-            db.session.add(new_task)
-            db.session.commit()
-            return redirect("/")
-        except:
-            return render_template("errorMessage.html", message="Error with adding task...")
+    if 'username' in session:
+        if request.method == "GET":
+            tasks_from_db =  Task.query.filter_by().all()
+            return render_template("index.html", tasks=tasks_from_db)
+        else:
+            title = request.form['title']
+            try:
+                # assert title,  "Title must not be empty"
+                new_task = Task(title=title)
+                db.session.add(new_task)
+                db.session.commit()
+                return redirect("/")
+            except:
+                return render_template("errorMessage.html", message="Error with adding task...")
+    return redirect(url_for('login'))
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if username == USERNAME and password == PASSWORD:
+            session['username'] = username
+            return redirect('/')
+        else:
+            return 'Invalid credentials. Please try again.'
+    return render_template('login.html')
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('login'))
+
 
 @app.route("/delete/<int:id>")
 def delete(id):
