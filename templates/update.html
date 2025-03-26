@@ -3,13 +3,13 @@
 
 {%  block head %}
     <link rel="stylesheet"   href="static/css/index.css">
-    <title>Update Task</title>
+    <title>עדכון משימה </title>
 {% endblock %}
 
 
 
 {%  block body %}
-    <h1>Update Task</h1>
+    <h1>עדכון משימה </h1>
     <form action="/update/{{task.id}}"  method="POST">
         <input id="title" name="title" type="text" value="{{task.title}}"/>
         <input id="dateToComplete" name="dateToComplete" type="text" value="{{task.dateToComplete}}"/>
@@ -20,6 +20,6 @@
 <!--            <option  value="True">True</option>-->
 <!--            <option  value="False">False</option>-->
 <!--        </select>-->
-        <button>Update</button>
+        <button>עדכן</button>
     </form>
 {% endblock %}

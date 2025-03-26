@@ -1,20 +1,19 @@
-{%  extends 'base.html'  %}
+{% extends 'base.html' %}
 
-{%  block head %}
-    <link rel="stylesheet"   href="static/css/index.css">
-    <title>Tasks App</title>
+{% block head %}
+<link rel="stylesheet" href="static/css/index.css">
+<title>מנהל המשימות</title>
 {% endblock %}
 
-{%  block body%}
-<h1>Your Tasks</h1>
-    {% if tasks|length < 1 %}
-        <h4>You don't have any task.  Create One!</h4>
+{% block body%}
+<h1> מנהל המשימות</h1>
+{% if tasks|length < 1 %} <h4>אין לך משימות. ערב פסל, זה הזמן ליצור!</h4>
     {%else %}
     <table>
         <tr>
-            <th>Title</th>
-            <th>Date</th>
-            <th>Is Completed</th>
+            <th>כותרת</th>
+            <th>תאריך</th>
+            <th>בוצע</th>
         </tr>
         {% for task in tasks: %}
         <tr>
@@ -22,8 +21,8 @@
             <td>{{task.date_created.date()}}</td>
             <td>{{task.completed}}</td>
             <td>
-                <a href="/update/{{task.id}}">Update</a>
-                <a href="/delete/{{task.id}}">Delete</a>
+                <a href="/update/{{task.id}}">עדכון</a>
+                <a href="/delete/{{task.id}}">מחיקה</a>
             </td>
         </tr>
         {% endfor %}
@@ -31,10 +30,8 @@
     </table>
     {% endif %}
 
-    <form action="/"  method="post">
-        <input id="title" name="title" type="text"/>
-        <input id="date_created" name="title" type="date"/>
-        <button>Add</button>
+    <form action="/" method="post">
+        <input id="title" name="title" type="text" placeholder="תוכן המשימה"/>
+        <button>הוסף משימה</button>
     </form>
-{% endblock %}
-
+    {% endblock %}
