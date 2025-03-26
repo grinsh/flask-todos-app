@@ -2,6 +2,9 @@ from flask import Flask, render_template, url_for, request, redirect, session
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 
+app = Flask(__name__)
+
+
 app.secret_key = 'your_secret_key'
 
 # User credentials
@@ -9,7 +12,6 @@ USERNAME = 'מנדי'
 PASSWORD = 'אוצר השמד'
 
 
-app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///todos.db"
 db = SQLAlchemy(app)
 
@@ -25,11 +27,7 @@ with app.app_context():
 
 @app.route("/", methods=["GET","POST"])
 def index():
-<<<<<<< HEAD
-    # if 'username' in session:
-=======
     if 'username' in session:
->>>>>>> 73d4f3b1d961ec0ccef88241b1c9ddd1cf1f1645
         if request.method == "GET":
             tasks_from_db =  Task.query.filter_by().all()
             return render_template("index.html", tasks=tasks_from_db)
@@ -43,8 +41,7 @@ def index():
                 return redirect("/")
             except:
                 return render_template("errorMessage.html", message="Error with adding task...")
-<<<<<<< HEAD
-    # return redirect('/login')
+    return redirect('/login')
 
 # @app.route('/login', methods=['GET', 'POST'])
 # def login():
@@ -61,8 +58,6 @@ def index():
 # def logout():
 #     session.pop('username', None)
 #     return redirect(url_for('login'))
-=======
-    return redirect(url_for('login'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -79,7 +74,6 @@ def login():
 def logout():
     session.pop('username', None)
     return redirect(url_for('login'))
->>>>>>> 73d4f3b1d961ec0ccef88241b1c9ddd1cf1f1645
 
 
 @app.route("/delete/<int:id>")
@@ -128,8 +122,4 @@ def get_not_found():
 #     return "Not Found 404"
 
 if __name__ == "__main__":
-<<<<<<< HEAD
     app.run(debug=True, use_evalex=False)
-=======
-    app.run(debug=True, use_evalex=False)
->>>>>>> 73d4f3b1d961ec0ccef88241b1c9ddd1cf1f1645
